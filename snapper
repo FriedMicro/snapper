@@ -1,0 +1,31 @@
+#!/bin/bash
+#Wrapper for snap
+
+sudo systemctl start snapd.socket
+
+case $1 in
+	-install)
+		sudo snap install $2
+		;;
+	-find)
+		sudo snap find $2
+		;;
+	-remove)
+		sudo snap remove $2 --purge
+		;;
+	-start)
+		sudo snap start $2
+		$2
+		;;
+	-upgrade)
+		sleep 5
+		sudo snap refresh
+		;;
+	-stop)
+		sudo snap stop $2
+		;;
+	*)
+		echo "-install (snap name), -find (snap name), -remove (snap name), -start (snap name), -upgrade, -stop (snap name)"
+esac
+
+sudo systemctl stop snapd.socket
